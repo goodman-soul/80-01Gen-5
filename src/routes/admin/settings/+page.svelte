@@ -79,10 +79,11 @@
 
 		<div class="space-y-6">
 			<div>
-				<label class="label">机构名称 *</label>
+				<label class="label" for="institution-name">机构名称 *</label>
 				<div class="relative">
 					<Building class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
 					<input
+						id="institution-name"
 						type="text"
 						bind:value={name}
 						class="input pl-10"
@@ -93,10 +94,11 @@
 			</div>
 
 			<div>
-				<label class="label">机构地址</label>
+				<label class="label" for="institution-address">机构地址</label>
 				<div class="relative">
 					<MapPin class="absolute left-3 top-3 w-5 h-5 text-gray-400" />
 					<textarea
+						id="institution-address"
 						bind:value={address}
 						class="input pl-10 min-h-[80px]"
 						placeholder="请输入机构详细地址"
@@ -105,10 +107,11 @@
 			</div>
 
 			<div>
-				<label class="label">联系电话</label>
+				<label class="label" for="institution-phone">联系电话</label>
 				<div class="relative">
 					<Phone class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
 					<input
+						id="institution-phone"
 						type="tel"
 						bind:value={contact_phone}
 						class="input pl-10"

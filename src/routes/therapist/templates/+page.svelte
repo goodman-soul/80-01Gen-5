@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { HomeworkTemplate } from '$lib/types';
+	import type { HomeworkTemplate, ExerciseType } from '$lib/types';
 	import { ExerciseTypeLabels, ExerciseTypeColors } from '$lib/types';
 	import { Search, Plus, FileText, Edit, Trash2, Copy } from 'lucide-svelte';
 	import { onMount } from 'svelte';
@@ -11,7 +11,14 @@
 	let templates: HomeworkTemplate[] = [];
 	let loading = true;
 	let searchQuery = '';
-	let selectedType = '';
+	let selectedType: ExerciseType | '' = '';
+
+	const exerciseTypeFilters: { value: ExerciseType | ''; label: string }[] = [
+		{ value: '', label: '全部' },
+		{ value: 'pronunciation', label: ExerciseTypeLabels.pronunciation },
+		{ value: 'fine_motor', label: ExerciseTypeLabels.fine_motor },
+		{ value: 'sensory', label: ExerciseTypeLabels.sensory }
+	];
 
 	$: filteredTemplates = templates.filter((t) => {
 		const matchSearch = t.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -71,26 +78,16 @@
 			/>
 		</div>
 		<div class="flex gap-2 flex-wrap">
-			<button
-				on:click={() => (selectedType = '')}
-				class={`px-4 py-2 rounded-lg text-sm font-medium transition-colors {
-					selectedType === ''
-						? 'bg-primary-500 text-white'
-						: 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-				}`}
-			>
-				全部
-			</button>
-			{#each (['pronunciation', 'fine_motor', 'sensory'] as const) as type}
+			{#each exerciseTypeFilters as filter}
 				<button
-					on:click={() => (selectedType = type)}
+					on:click={() => (selectedType = filter.value)}
 					class={`px-4 py-2 rounded-lg text-sm font-medium transition-colors {
-						selectedType === type
+						selectedType === filter.value
 							? 'bg-primary-500 text-white'
 							: 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
 					}`}
 				>
-					{ExerciseTypeLabels[type]}
+					{filter.label}
 				</button>
 			{/each}
 		</div>

@@ -202,12 +202,12 @@
 		<h2 class="text-lg font-semibold text-gray-900 mb-4">3. 作业详情</h2>
 		<div class="space-y-4">
 			<div>
-				<label class="label">作业标题 *</label>
-				<input type="text" bind:value={title} class="input" required />
+				<label for="homework-title" class="label">作业标题 *</label>
+				<input id="homework-title" type="text" bind:value={title} class="input" required />
 			</div>
 
-			<div>
-				<label class="label">训练类型 *</label>
+			<fieldset>
+				<legend class="label">训练类型 *</legend>
 				<div class="grid grid-cols-3 gap-3">
 					{#each exerciseTypeList as type}
 						<button
@@ -223,11 +223,12 @@
 						</button>
 					{/each}
 				</div>
-			</div>
+			</fieldset>
 
 			<div>
-				<label class="label">作业说明</label>
+				<label for="homework-description" class="label">作业说明</label>
 				<textarea
+					id="homework-description"
 					bind:value={description}
 					class="input min-h-[100px]"
 					placeholder="为家长说明本次训练的要点和注意事项..."
@@ -236,22 +237,22 @@
 
 			<div class="grid md:grid-cols-3 gap-4">
 				<div>
-					<label class="label">开始日期 *</label>
+					<label for="start-date" class="label">开始日期 *</label>
 					<div class="relative">
 						<Calendar class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-						<input type="date" bind:value={startDate} class="input pl-10" required />
+						<input id="start-date" type="date" bind:value={startDate} class="input pl-10" required />
 					</div>
 				</div>
 				<div>
-					<label class="label">结束日期 *</label>
+					<label for="end-date" class="label">结束日期 *</label>
 					<div class="relative">
 						<Calendar class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-						<input type="date" bind:value={endDate} class="input pl-10" required />
+						<input id="end-date" type="date" bind:value={endDate} class="input pl-10" required />
 					</div>
 				</div>
 				<div>
-					<label class="label">每周频次</label>
-					<select bind:value={frequency} class="input">
+					<label for="frequency" class="label">每周频次</label>
+					<select id="frequency" bind:value={frequency} class="input">
 						{#each [1, 2, 3, 4, 5, 6, 7] as n}
 							<option value={n}>每周 {n} 次</option>
 						{/each}

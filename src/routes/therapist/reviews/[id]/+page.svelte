@@ -50,20 +50,21 @@
 		checkIn = ciData;
 
 		if (ciData?.review?.[0]) {
-			existingReview = ciData.review[0];
-			overallRating = existingReview.overall_rating || 0;
-			actionCorrect = existingReview.action_correct;
-			feedback = existingReview.feedback || '';
-			nextAdjustment = existingReview.next_adjustment || '';
-			stepReviews = existingReview.step_reviews || [];
-			videoAnnotations = existingReview.video_annotations || [];
+			const review = ciData.review[0] as Review;
+			existingReview = review;
+			overallRating = review.overall_rating || 0;
+			actionCorrect = review.action_correct;
+			feedback = review.feedback || '';
+			nextAdjustment = review.next_adjustment || '';
+			stepReviews = review.step_reviews || [];
+			videoAnnotations = review.video_annotations || [];
 		}
 
-		const templateSteps = ciData?.homework?.template?.steps || [];
+		const templateSteps = (ciData?.homework?.template?.steps || []) as HomeworkStep[];
 		if (stepReviews.length === 0 && templateSteps.length > 0) {
 			stepReviews = templateSteps
-				.sort((a, b) => a.step_number - b.step_number)
-				.map((s) => ({ step_id: s.id, correct: false, feedback: '' }));
+				.sort((a: HomeworkStep, b: HomeworkStep) => a.step_number - b.step_number)
+				.map((s: HomeworkStep) => ({ step_id: s.id, correct: false, feedback: '' }));
 		}
 
 		loading = false;
@@ -279,8 +280,8 @@
 						</span>
 					</div>
 
-					<div class="mb-6">
-						<label class="label mb-3">动作是否到位？</label>
+					<fieldset class="mb-6">
+						<legend class="label mb-3">动作是否到位？</legend>
 						<div class="flex gap-3">
 							<button
 								type="button"
@@ -307,11 +308,12 @@
 								需改进
 							</button>
 						</div>
-					</div>
+					</fieldset>
 
 					<div class="mb-6">
-						<label class="label">整体反馈 *</label>
+						<label for="overall-feedback" class="label">整体反馈 *</label>
 						<textarea
+							id="overall-feedback"
 							bind:value={feedback}
 							class="input min-h-[120px]"
 							placeholder="评价本次训练的整体表现，指出做得好的地方和需要改进的地方..."
@@ -319,8 +321,9 @@
 					</div>
 
 					<div>
-						<label class="label">下次训练调整建议</label>
+						<label for="next-adjustment" class="label">下次训练调整建议</label>
 						<textarea
+							id="next-adjustment"
 							bind:value={nextAdjustment}
 							class="input min-h-[100px]"
 							placeholder="针对本次训练情况，给出下次训练的调整建议，如增加难度、更换动作、延长时间等..."

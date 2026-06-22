@@ -399,25 +399,25 @@
 				<div class="space-y-4">
 					{#if !editingUser}
 						<div>
-							<label class="label">邮箱 *</label>
-							<input type="email" bind:value={newUser.email} class="input" required />
+							<label class="label" for="user-email">邮箱 *</label>
+							<input id="user-email" type="email" bind:value={newUser.email} class="input" required />
 						</div>
 						<div>
-							<label class="label">初始密码 *</label>
-							<input type="password" bind:value={newUser.password} class="input" required />
+							<label class="label" for="user-password">初始密码 *</label>
+							<input id="user-password" type="password" bind:value={newUser.password} class="input" required />
 						</div>
 					{/if}
 					<div>
-						<label class="label">姓名 *</label>
-						<input type="text" bind:value={newUser.full_name} class="input" required />
+						<label class="label" for="user-full-name">姓名 *</label>
+						<input id="user-full-name" type="text" bind:value={newUser.full_name} class="input" required />
 					</div>
 					<div>
-						<label class="label">手机号</label>
-						<input type="tel" bind:value={newUser.phone} class="input" />
+						<label class="label" for="user-phone">手机号</label>
+						<input id="user-phone" type="tel" bind:value={newUser.phone} class="input" />
 					</div>
 					<div>
-						<label class="label">角色</label>
-						<select bind:value={newUser.role} class="input">
+						<label class="label" for="user-role">角色</label>
+						<select id="user-role" bind:value={newUser.role} class="input">
 							{#each roleList as role}
 								<option value={role}>{roleLabels[role]}</option>
 							{/each}
@@ -438,21 +438,21 @@
 				<h3 class="text-xl font-bold text-gray-900 mb-6">添加孩子</h3>
 				<div class="space-y-4">
 					<div>
-						<label class="label">姓名 *</label>
-						<input type="text" bind:value={newChild.name} class="input" required />
+						<label class="label" for="child-name">姓名 *</label>
+						<input id="child-name" type="text" bind:value={newChild.name} class="input" required />
 					</div>
 					<div>
-						<label class="label">小名</label>
-						<input type="text" bind:value={newChild.nickname} class="input" />
+						<label class="label" for="child-nickname">小名</label>
+						<input id="child-nickname" type="text" bind:value={newChild.nickname} class="input" />
 					</div>
 					<div class="grid grid-cols-2 gap-4">
 						<div>
-							<label class="label">出生日期</label>
-							<input type="date" bind:value={newChild.birth_date} class="input" />
+							<label class="label" for="child-birth-date">出生日期</label>
+							<input id="child-birth-date" type="date" bind:value={newChild.birth_date} class="input" />
 						</div>
 						<div>
-							<label class="label">性别</label>
-							<select bind:value={newChild.gender} class="input">
+							<label class="label" for="child-gender">性别</label>
+							<select id="child-gender" bind:value={newChild.gender} class="input">
 								<option value="">请选择</option>
 								<option value="male">男</option>
 								<option value="female">女</option>
@@ -461,8 +461,8 @@
 						</div>
 					</div>
 					<div>
-						<label class="label">家长 *</label>
-						<select bind:value={newChild.parent_id} class="input" required>
+						<label class="label" for="child-parent">家长 *</label>
+						<select id="child-parent" bind:value={newChild.parent_id} class="input" required>
 							<option value="">请选择家长</option>
 							{#each parents as p}
 								<option value={p.id}>{p.full_name}</option>
@@ -470,8 +470,8 @@
 						</select>
 					</div>
 					<div>
-						<label class="label">治疗师</label>
-						<select bind:value={newChild.therapist_id} class="input">
+						<label class="label" for="child-therapist">治疗师</label>
+						<select id="child-therapist" bind:value={newChild.therapist_id} class="input">
 							<option value="">请选择治疗师</option>
 							{#each therapists as t}
 								<option value={t.id}>{t.full_name}</option>

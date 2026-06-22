@@ -35,27 +35,41 @@
 				description = tplData.description || '';
 				exerciseType = tplData.exercise_type;
 				isPublic = tplData.is_public;
-				steps = (tplData.steps || []).sort((a, b) => a.step_number - b.step_number);
+				steps = (tplData.steps as HomeworkStep[] || []).sort(
+					(a: HomeworkStep, b: HomeworkStep) => a.step_number - b.step_number
+				);
 			}
 		}
 	});
 
 	function addStep() {
-		steps = [
-			...steps,
-			{
-				id: `temp-${Date.now()}`,
-				template_id: '',
-				step_number: steps.length + 1,
-				title: '',
-				description: '',
-				image_url: null,
-				video_url: null,
-				duration_seconds: 0,
-				created_at: new Date().toISOString(),
-				updated_at: new Date().toISOString()
-			}
-		];
+		const step = {
+			id: `temp-${Date.now()}`,
+			template_id: '',
+			step_number: steps.length + 1,
+			title: '',
+			description: '' as string | null,
+			image_url: null as string | null,
+			video_url: null as string | null,
+			duration_seconds: 0,
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
+		};
+		steps = [...steps, step];
+	}
+
+	function ensureString(v: string | null | undefined): string {
+		return v ?? '';
+	}
+
+	function updateStepVideoUrl(step: typeof steps[number], value: string) {
+		step.video_url = value || null;
+		steps = [...steps];
+	}
+
+	function onVideoUrlInput(event: Event, step: typeof steps[number]) {
+		const target = event.target as HTMLInputElement;
+		updateStepVideoUrl(step, target.value);
 	}
 
 	function removeStep(index: number) {
@@ -166,8 +180,9 @@
 	<div class="card p-6 mb-6">
 		<div class="space-y-4">
 			<div>
-				<label class="label">作业标题 *</label>
+				<label class="label" for="tpl-title">作业标题 *</label>
 				<input
+					id="tpl-title"
 					type="text"
 					bind:value={title}
 					class="input"
@@ -176,8 +191,8 @@
 				/>
 			</div>
 
-			<div>
-				<label class="label">训练类型 *</label>
+			<fieldset>
+				<legend class="label">训练类型 *</legend>
 				<div class="grid grid-cols-3 gap-3">
 					{#each exerciseTypeList as type}
 						<button
@@ -193,11 +208,12 @@
 						</button>
 					{/each}
 				</div>
-			</div>
+			</fieldset>
 
 			<div>
-				<label class="label">作业描述</label>
+				<label class="label" for="tpl-desc">作业描述</label>
 				<textarea
+					id="tpl-desc"
 					bind:value={description}
 					class="input min-h-[100px]"
 					placeholder="描述这个训练的目标和要点..."
@@ -258,30 +274,37 @@
 							</div>
 
 							<div class="flex-1 space-y-3">
+								<label class="label" for="step-title-{index}">步骤标题</label>
 								<input
+									id="step-title-{index}"
 									type="text"
 									bind:value={step.title}
 									class="input"
 									placeholder="步骤标题"
 								/>
+								<label class="label" for="step-desc-{index}">步骤说明和操作要点</label>
 								<textarea
+									id="step-desc-{index}"
 									bind:value={step.description}
 									class="input min-h-[80px]"
 									placeholder="步骤说明和操作要点..."
 								/>
 								<div class="grid grid-cols-2 gap-3">
 									<div>
-										<label class="label">参考视频URL</label>
+										<label class="label" for="step-video-{index}">参考视频URL</label>
 										<input
+											id="step-video-{index}"
 											type="url"
-											bind:value={step.video_url ?? ''}
+											value={ensureString(step.video_url)}
+											on:input={(e) => onVideoUrlInput(e, step)}
 											class="input text-sm"
 											placeholder="https://..."
 										/>
 									</div>
 									<div>
-										<label class="label">建议时长（秒）</label>
+										<label class="label" for="step-duration-{index}">建议时长（秒）</label>
 										<input
+											id="step-duration-{index}"
 											type="number"
 											bind:value={step.duration_seconds}
 											min="0"

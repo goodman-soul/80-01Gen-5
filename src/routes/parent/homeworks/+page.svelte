@@ -54,8 +54,8 @@
 
 	{#if data.children && data.children.length > 1}
 		<div class="mb-6">
-			<label class="label">选择孩子</label>
-			<select bind:value={selectedChildId} class="input max-w-xs">
+			<label class="label" for="select-child">选择孩子</label>
+			<select id="select-child" bind:value={selectedChildId} class="input max-w-xs">
 				<option value="">全部</option>
 				{#each data.children as child}
 					<option value={child.id}>{child.name}</option>

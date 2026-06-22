@@ -34,7 +34,9 @@
 
 		homework = hwData;
 		if (hwData?.template?.steps) {
-			steps = hwData.template.steps.sort((a, b) => a.step_number - b.step_number);
+			steps = (hwData.template.steps as HomeworkStep[]).sort(
+				(a: HomeworkStep, b: HomeworkStep) => a.step_number - b.step_number
+			);
 		}
 		loading = false;
 	});
@@ -267,10 +269,11 @@
 		<div class="card p-6 mb-6">
 			<h2 class="text-lg font-semibold text-gray-900 mb-4">今日反馈</h2>
 			<div class="mb-4">
-				<label class="label">孩子情绪</label>
+				<label class="label" for="mood-happy">孩子情绪</label>
 				<div class="flex flex-wrap gap-2">
 					{#each moodList as m}
 						<button
+							id={m === 'happy' ? 'mood-happy' : undefined}
 							type="button"
 							on:click={() => (mood = mood === m ? null : m)}
 							class={`px-4 py-2 rounded-lg text-sm font-medium transition-colors border {
@@ -285,8 +288,9 @@
 				</div>
 			</div>
 			<div>
-				<label class="label">备注</label>
+				<label class="label" for="notes">备注</label>
 				<textarea
+					id="notes"
 					bind:value={notes}
 					class="input min-h-[100px]"
 					placeholder="记录训练过程中的情况和问题..."

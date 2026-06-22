@@ -89,9 +89,10 @@
 				</div>
 
 				<div>
-					<label class="label">登录身份</label>
+					<label class="label" for="role-parent">登录身份</label>
 					<div class="grid grid-cols-3 gap-2">
 						<button
+							id="role-parent"
 							type="button"
 							on:click={() => (role = 'parent')}
 							class="px-4 py-2 rounded-lg text-sm font-medium transition-colors border {
